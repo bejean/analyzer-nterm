@@ -69,22 +69,22 @@ public class TextConfig {
 		return result;
 	}
 
-	/***
-	 * Fusionne les éléments d'un tableau en une chaîne
-	 * @param delim : la chaîne de séparation
-	 * @param args : la tableau
-	 * @return la chaîne fusionnée
-	 */
-	private static String implode(String delim, String[] args){
-		StringBuffer sb = new StringBuffer();
-
-		for(int i =0; i < args.length; i++){
-			if (i > 0)
-				sb.append(delim);
-
-			sb.append(args[i]);
-		}
-
-		return sb.toString();
-	}
+//	/***
+//	 * Fusionne les ��l��ments d'un tableau en une cha��ne
+//	 * @param delim : la cha��ne de s��paration
+//	 * @param args : la tableau
+//	 * @return la cha��ne fusionn��e
+//	 */
+//	private static String implode(String delim, String[] args){
+//		StringBuffer sb = new StringBuffer();
+//
+//		for(int i =0; i < args.length; i++){
+//			if (i > 0)
+//				sb.append(delim);
+//
+//			sb.append(args[i]);
+//		}
+//
+//		return sb.toString();
+//	}
 }

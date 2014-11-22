@@ -28,17 +28,15 @@ import org.apache.lucene.analysis.core.LowerCaseTokenizer;
 import org.apache.lucene.analysis.core.WhitespaceTokenizer;
 import org.apache.lucene.analysis.shingle.ShingleFilter;
 import org.apache.lucene.analysis.util.StopwordAnalyzerBase;
-import org.apache.lucene.util.Version;
 
 public final class NTermAnalyzer extends StopwordAnalyzerBase {
   
 	private final String ntermStopFilterRules;
 
   /** Builds an analyzer with the stop words from the given set.
-   * @param matchVersion See <a href="#version">above</a>
    * @param stopWords Set of stop words */
-  public NTermAnalyzer(Version matchVersion, String ntermStopFilterRules) {
-    super(matchVersion);
+  public NTermAnalyzer(String ntermStopFilterRules) {
+    super();
     this.ntermStopFilterRules = ntermStopFilterRules;
   }
 
@@ -84,10 +82,10 @@ public final class NTermAnalyzer extends StopwordAnalyzerBase {
 
 	  	Reader reader2 = (normMap == null ? reader : new MappingCharFilter(normMap,reader));
 	  		  
-		final Tokenizer source = new WhitespaceTokenizer(matchVersion, reader2);
-	    TokenStream tokenStream = new LowerCaseFilter(matchVersion, source);
+		final Tokenizer source = new WhitespaceTokenizer(reader2);
+	    TokenStream tokenStream = new LowerCaseFilter(source);
 	    tokenStream = new ShingleFilter(tokenStream, 2, 3);
-	    tokenStream = new NTermStopFilter(matchVersion, tokenStream, ntermStopFilterRules);    
+	    tokenStream = new NTermStopFilter(tokenStream, ntermStopFilterRules);    
 	    return new TokenStreamComponents(source, tokenStream);
 	  }
   

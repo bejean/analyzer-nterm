@@ -10,7 +10,6 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.util.FilteringTokenFilter;
 import org.apache.lucene.analysis.util.TextConfig;
-import org.apache.lucene.util.Version;
 
 public final class NTermStopFilter extends FilteringTokenFilter {
 
@@ -24,13 +23,13 @@ public final class NTermStopFilter extends FilteringTokenFilter {
 	private boolean option_include = false;
 
 
-	public NTermStopFilter(Version matchVersion, TokenStream in, String ntermStopFilterRules) {
-		super(true, in);
+	public NTermStopFilter(TokenStream in, String ntermStopFilterRules) {
+		super(in);
 		readJunkFile(ntermStopFilterRules);
 	}
 
-	public NTermStopFilter(Version matchVersion, TokenStream in, List<String> ntermStopFilterRulesLines) {
-		super(true, in);
+	public NTermStopFilter(TokenStream in, List<String> ntermStopFilterRulesLines) {
+		super(in);
 		readJunkFile(ntermStopFilterRulesLines);
 	}
 
@@ -141,24 +140,16 @@ public final class NTermStopFilter extends FilteringTokenFilter {
 	 */
 	private void readJunkFile(List<String> lines) {
 
-		//System.out.println("readJunkFile 1");
-
 		if (lines==null || lines.size()==0) return;
 
-		//System.out.println("readJunkFile 1.2");
-
 		try {
-			List<String> junkList = new ArrayList<String>();
-
 			boolean junkwords = false;
 			boolean mutual_exclusion = false;
 
 			for (String line : lines) {
-
 				//System.out.println("line : " + line);
 
 				//read each line of text file
-				//while ((line = bufRdr.readLine()) != null) {
 				if (line.startsWith("#") || line.trim().length() == 0) {
 					continue;
 				} else if (line.startsWith("-numbers")) {
@@ -212,13 +203,8 @@ public final class NTermStopFilter extends FilteringTokenFilter {
 	}
 
 	private void readJunkFile(String filename) {
-
-		//System.out.println("readJunkFile 2");
 		if (filename==null || "".equals(filename)) return;
-		//System.out.println("readJunkFile 2.2 - " + filename);
 		try {
-			//ArrayList<String> list = getFileContent(filename);
-			//String [] lines = list.toArray(new String[list.size()]);
 			String [] lines = TextConfig.readFile( filename);
 			readJunkFile(Arrays.asList(lines));
 			return;

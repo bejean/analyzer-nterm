@@ -36,24 +36,15 @@ public class NTermStopFilterFactory extends TokenFilterFactory implements Resour
 
 	private String ntermStopFilterRulesFile;
 	private String configDir;
-
-//	@Override
-//	public void init(Map<String,String> args) {
-//		//super.init(args);
-//		assureMatchVersion();
-//	}
 	
 	public void inform(ResourceLoader loader) throws IOException {
 		configDir = ((org.apache.solr.core.SolrResourceLoader) loader).getConfigDir();
-		//ntermStopFilterRulesFile = args.get("ntermStopFilterRules");
-		//System.out.println("NTermStopFilterFactory - inform - " + configDir + " - " + ntermStopFilterRulesFile);
 		if (ntermStopFilterRulesFile == null) throw new RuntimeException(); 
 	}
 
 	public TokenStream create(TokenStream input) {
 		String rules = new File(configDir, ntermStopFilterRulesFile).toString();
-		//System.out.println("NTermStopFilterFactory - create - " + rules);
-		NTermStopFilter stopFilter = new NTermStopFilter(luceneMatchVersion,input,rules);
+		NTermStopFilter stopFilter = new NTermStopFilter(input,rules);
 		return stopFilter;
 	}
 
